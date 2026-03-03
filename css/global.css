@@ -18,6 +18,122 @@
     --tc-feature-wish-bg: #450640;
 }
 
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Preloader CSS */
+.preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--bs-body-bg);
+      opacity: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: 0.5s ease-in-out;
+}
+
+.preloader.fade-out {
+    animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+.preloader > div {
+      background-color: var(--bs-primary-bg);
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      animation: stretchdelay 0.7s infinite ease-in-out;
+}
+
+@keyframes stretchdelay {
+   0%, 40%, 100% { 
+        transform: translateY(0px);
+   }
+   20% {
+        transform: translateY(-10px);
+   }
+}
+
+.preloader .circ1 {
+  animation-delay: 0;
+}
+
+.preloader .circ2 {
+  animation-delay: 0.1s;
+}
+
+.preloader .circ3 {
+  animation-delay: 0.2s;
+}
+
+.preloader .circ4 {
+  animation-delay: 0.3s;
+}
+
 header.header {
     width: 100%;
     height: 100vh;
