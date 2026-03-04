@@ -7,13 +7,15 @@
 
     fetch('./js/data.json').then(response => response.json())
         .then(data => {
+            var navLinks = '';
+
             data.forEach((item, index) => {
                 if (item.isMainAd.toUpperCase() === 'TRUE') {
-                    const navLink = `<a class="nav-link" href="#sec${item.id}">${item.navName}</a>`;
-                    elementMainNav.insertAdjacentHTML('afterbegin', navLink);
+                    const navLink = `<a class="nav-link" href="#sec${item.plan}">${item.navName}</a>`;
+                    navLinks += navLink;
                 } else {
-                    const navLink = `<li><a class="dropdown-item" href="#sec${item.id}">${item.navName}</a></li>`;
-                    elementMainNavEvents.insertAdjacentHTML('beforeend', navLink);
+                    const navLink = `<li><a class="dropdown-item" href="#sec${item.plan}">${item.navName}</a></li>`;
+                    elementMainNavEvents.insertAdjacentHTML('beforeend', navLinks);
                 }
 
                 elementeaderCarouselIndicators.insertAdjacentHTML('beforeend', `<button type="button" data-bs-target="#headerCarousel" data-bs-slide-to="${index}" ${index === 0 ? 'class="active" aria-current="true"' : ''} aria-label="${index + 1}"></button>`);
@@ -22,13 +24,13 @@
                     <div class="carousel-caption d-block">
                         <h5>${item.name}</h5>
                         <p>${item.catchCopy}</p>
-                        <a class="btn btn-primary" href="#sec${item.id}">詳細資訊</a>
+                        <a class="btn btn-primary" href="#sec${item.plan}">詳細資訊</a>
                     </div>
                 </div>`);
 
                 const mainContent = document.createElement('article');
-                mainContent.classList.add(`sec-${item.id}`);
-                mainContent.innerHTML = `<a name="sec${item.id}"></a>
+                mainContent.classList.add(`sec-${item.plan}`);
+                mainContent.innerHTML = `<a name="sec${item.plan}"></a>
                     <div class="hero-section row m-0">
                         <div class="col-12 h-100 w-100 p-0" style="position: relative;">
                             <img src="img/${item.rootID}/${item.headerImage}">
@@ -46,9 +48,9 @@
                     <div class="detail-link row m-0 mb-5 text-bg-secondary">
                         <div class="m-auto row col-12 col-lg-9 align-items-center">
                             <div class="nav col-12 col-lg-6 d-flex justify-content-center justify-content-md-start align-items-center h-100">
-                                <a href="#sec${item.id}-intro" class="h-100"><div class="inner">特色介紹</div></a>
-                                <a href="#sec${item.id}-daily-schedule" class="h-100"><div class="inner">每日行程</div></a>
-                                <a href="#sec${item.id}-attention" class="h-100"><div class="inner">注意事項</div></a>
+                                <a href="#sec${item.plan}-intro" class="h-100"><div class="inner">特色介紹</div></a>
+                                <a href="#sec${item.plan}-daily-schedule" class="h-100"><div class="inner">每日行程</div></a>
+                                <a href="#sec${item.plan}-attention" class="h-100"><div class="inner">注意事項</div></a>
                             </div>
                             <div class="col-12 col-lg-6 d-flex justify-content-center justify-content-md-end align-items-center h-100 p-2">
                                 <div class="h-100">
@@ -61,13 +63,13 @@
                     </div>
                     <div class="content row col-12 col-lg-9 m-auto">
                         <article class="row">
-                            <a name="sec${item.id}-intro"><h1 class="text-center">特色介紹</h1></a>
+                            <a name="sec${item.plan}-intro"><h1 class="text-center">特色介紹</h1></a>
                             <div class="feature w-75 text-bg-secondary p-3">
                                 ${markdownToHTML(item.feature)}
                             </div>
                         </article>
                         <article class="row daily-schedule">
-                            <a name="sec${item.id}-daily-schedule"></a>
+                            <a name="sec${item.plan}-daily-schedule"></a>
                             ${item.schedule.map((daily, dailyIndex) => {
                                 return `<div class="row col-12 daily mt-5">
                                     <div class="col-12 col-md-5 col-xl-4 daily-header">
@@ -140,6 +142,8 @@
                     </div>`;
                 elementMainContainer.appendChild(mainContent);
             })
+
+            elementMainNav.insertAdjacentHTML('afterbegin', navLinks);
 
             if (elementMainNavEvents.children.length == 0) {
                 elementMainNav.querySelector('.dropdown').style = 'display: none;';
