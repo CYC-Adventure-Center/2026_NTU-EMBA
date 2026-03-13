@@ -48,7 +48,7 @@ function toChineseDate(dateVal, returnWeekday = false) {
     // return `${d.getFullYear()}年${(d.getMonth() + 1).toString().padStart(2, '0')}月${d.getDate().toString().padStart(2, '0')}日`;
 }
 
-function markdownToHTML(markdown) {
+function markdownToHTML(markdown, isLinkBlank = true) {
     const escapeHtml = (text) => {
         const map = {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'}
         return text.replace(/[&<>"']/g, m => map[m])
@@ -118,7 +118,7 @@ function markdownToHTML(markdown) {
     html = html.replace(/\*(.+?)\*/g, '<em>$1</em>')
 
     // Links
-    html = html.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">$1</a>')
+    html = html.replace(/\[(.+?)\]\((.+?)\)/g, `<a href="$2"${isLinkBlank ? ' target="_blank" rel="noopener noreferrer"' : ''}>$1</a>`)
 
     // Images
     html = html.replace(/!\[(.+?)\]\((.+?)\)/g, '<img src="$2" alt="$1">')
