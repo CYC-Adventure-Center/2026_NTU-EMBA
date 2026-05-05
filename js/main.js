@@ -38,7 +38,7 @@
                                 <div class="inner">
                                     <h1 class="fw-bold">${item.name}</h1>
                                     <p>活動日期：${item.session.map((session) => {
-                                        return `${session.startDate}(${toChineseDate(session.startDate, true)})-${session.endDate}(${toChineseDate(session.endDate, true)}) (報名截止：${session.expirationDate}(${toChineseDate(session.expirationDate, true)}))`;
+                                        return `${session.startDate != '-未定-' ? ` ${session.startDate}(${toChineseDate(session.startDate, true)})-${session.endDate}(${toChineseDate(session.endDate, true)})` : '未定' } ${session.expirationDate != '-未定-' ? `(報名截止：${session.expirationDate}(${toChineseDate(session.expirationDate, true)}))` : '' }`
                                     }).join('<br>')}<br>活動人數：${item.quota}人
                                     </p>
                                 </div>
@@ -48,7 +48,13 @@
                     <div class="detail-link row m-0 mb-5 text-bg-secondary">
                         <div class="m-auto row col-12 col-lg-9 align-items-center">
                             <div class="nav col-12 col-lg-6 d-flex justify-content-center justify-content-md-start align-items-center h-100">
-                                <a href="#sec${item.plan}-intro" class="h-100"><div class="inner">特色介紹</div></a>
+                                ${(() => {
+                                    if (item.feature != '') {
+                                        return `<a href="#sec${item.plan}-intro" class="h-100"><div class="inner">特色介紹</div></a>`
+                                    } else {
+                                        return ''
+                                    }
+                                })()}
                                 <a href="#sec${item.plan}-daily-schedule" class="h-100"><div class="inner">每日行程</div></a>
                                 <a href="#sec${item.plan}-attention" class="h-100"><div class="inner">注意事項</div></a>
                             </div>
@@ -62,12 +68,20 @@
                         </div>
                     </div>
                     <div class="content row col-12 col-lg-9 m-auto">
-                        <article class="row">
-                            <a name="sec${item.plan}-intro"><h1 class="text-center">特色介紹</h1></a>
-                            <div class="feature w-75 text-bg-secondary p-3">
-                                ${markdownToHTML(item.feature)}
-                            </div>
-                        </article>
+                        ${(() => {
+                            if (item.feature != '') {
+                                return `
+                                    <article class="row">
+                                        <a name="sec${item.plan}-intro"><h1 class="text-center">特色介紹</h1></a>
+                                        <div class="feature w-75 text-bg-secondary p-3">
+                                            ${markdownToHTML(item.feature)}
+                                        </div>
+                                    </article>
+                                `
+                            } else {
+                                return ''
+                            }
+                        })()}
                         <article class="row daily-schedule">
                             <a name="sec${item.plan}-daily-schedule"></a>
                             ${item.schedule.map((daily, dailyIndex) => {
@@ -85,13 +99,21 @@
                                                 </div>
                                             </div>
                                             <div class="col-12 break mt-2 mb-5"></div>
-                                            <div class="col-2" title="住宿場所"><ion-icon name="home-outline" size="large"></ion-icon></div>
-                                            <div class="col-9 offset-1">
-                                                <div class="row">
-                                                    <div class="col-12">${daily.accommodation ? daily.accommodation : '-'}</div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 break mt-2 mb-5"></div>
+                                            ${(() => {
+                                                if (daily.accommodation) {
+                                                    return `
+                                                        <div class="col-2" title="住宿場所"><ion-icon name="home-outline" size="large"></ion-icon></div>
+                                                        <div class="col-9 offset-1">
+                                                            <div class="row">
+                                                                <div class="col-12">${daily.accommodation}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 break mt-2 mb-5"></div>
+                                                    `
+                                                } else {
+                                                    return ''
+                                                }
+                                            })()}
                                             <div class="col-2" title="交通工具"><ion-icon name="car-outline" size="large"></ion-icon></div>
                                             <div class="col-9 offset-1">
                                                 <div class="row">
