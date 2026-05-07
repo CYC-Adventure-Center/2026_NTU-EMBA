@@ -152,7 +152,7 @@
                                 <div class="text-bg-secondary p-4 rounded mt-4">
                                     <h2>經費說明</h2>
                                     <p class="fw-bold">專案優惠價：${item.price}。</p>
-                                    <p class="fw-bold">報名名額：${item.quota}</p>
+                                    <p class="fw-bold">報名名額：${item.quota}人${item.quota != item.lowestQuota ? `(最低成團人數：${item.lowestQuota}人)` :''}</p>
                                     <blockquote class="blockquote">
                                         <p>費用包含：</p>
                                         ${markdownToHTML(item.priceInclude)}
