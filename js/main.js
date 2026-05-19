@@ -38,7 +38,12 @@
                                 <div class="inner">
                                     <h1 class="fw-bold">${item.name}</h1>
                                     <p>活動日期：${item.session.map((session) => {
-                                        return `${session.startDate != '-未定-' ? ` ${session.startDate}(${toChineseDate(session.startDate, true)})-${session.endDate}(${toChineseDate(session.endDate, true)})` : '未定' } ${session.expirationDate != '-未定-' ? `(報名截止：${session.expirationDate}(${toChineseDate(session.expirationDate, true)}))` : '' }`
+                                        var dateString = session.startDate != '-未定-' ? `${session.startDate.substring(5)}(${toChineseDate(session.startDate, true)})` : ''
+                                        if (session.startDate != session.endDate) {
+                                            dateString += `-${session.endDate.substring(5)}(${toChineseDate(session.endDate, true)})`
+                                        }
+
+                                        return `${dateString} ${session.expirationDate != '-未定-' ? `(報名截止：${session.expirationDate.substring(5)}(${toChineseDate(session.expirationDate, true)}))` : '' }`
                                     }).join('<br>')}<br>活動人數：${item.quota}人
                                     </p>
                                 </div>
